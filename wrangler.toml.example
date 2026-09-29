@@ -4,8 +4,8 @@ pages_build_output_dir = "."
 
 [[d1_databases]]
 binding = "DB"
-database_name = "ieee-tamusa"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_name = "ieee-tamusa-d1"
+database_id = "609e3862-4912-4551-a717-e25bf74bc8a6"
 migrations_dir = "migrations"
 
 [vars]
