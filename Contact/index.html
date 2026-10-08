@@ -50,7 +50,7 @@ document.getElementById("contact-form").addEventListener("submit", async (ev) =>
   const form=ev.currentTarget, status=document.getElementById("contact-status");
   status.className="form-status"; status.textContent="Sending...";
   try {
-    const r=await fetch("/api/contact",{method:"POST",body:new FormData(form)});
+    const r=await fetch("/functions/api/contact",{method:"POST",body:new FormData(form)});
     const data=await r.json();
     if(!r.ok) throw new Error(data.error || "Unable to send your message.");
     status.className="form-status success"; status.textContent="Thanks! Your message has been sent.";
