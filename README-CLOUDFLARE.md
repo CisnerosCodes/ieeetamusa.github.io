@@ -63,3 +63,16 @@ They do not need Cloudflare dashboard access. Authentication is handled by the s
 - A honeypot field is included as an additional spam filter.
 - Resource URLs are restricted to HTTP/HTTPS.
 - D1 stores resource metadata/links and contact messages. For large binary files, use an object store such as R2 rather than putting file blobs in D1.
+
+## 5. Newsletter
+Visitors sign up at `/Newsletter` (Turnstile-protected, same keys as the contact form). Emails are stored in the D1 `subscribers` table.
+
+Setup:
+1. Apply `migrations/0002_newsletter.sql` to the D1 database (D1 console, or `wrangler d1 migrations apply ieee-tamusa-d1 --remote`).
+2. Set a long random secret for the scheduled sender: `wrangler pages secret put NEWSLETTER_TOKEN`.
+
+Reading the list:
+- Officers: `/Admin` shows the subscriber count and a **Download CSV** button.
+- Scheduled job: `GET /api/admin/subscribers` with `Authorization: Bearer NEWSLETTER_TOKEN` returns each active subscriber with a personal `unsubscribeUrl`.
+
+Sending: there is no mail server in this repo. A scheduled Claude task writes the issue from `/api/events` and sends it from the branch Gmail. Every email must include that subscriber's `unsubscribeUrl`. The unsubscribe link shows a confirm button before unsubscribing, so email link scanners can't unsubscribe people by accident.

@@ -32,6 +32,9 @@
 <button>Publish Resource</button><div id="resource-status" role="status"></div>
 </form>
 <h2>Published Resources</h2><div id="resources-admin"></div>
+<h2>Newsletter Subscribers</h2>
+<p id="subscriber-count"></p>
+<a class="button" href="/api/admin/subscribers?format=csv">Download CSV</a>
 <h2>Contact Messages</h2><div id="messages-admin"></div>
 </div>
 </main>
@@ -81,6 +84,9 @@ async function load() {
     card.append(el("h3", x.title), el("p", x.description), link, del);
     return card;
   }));
+
+  const {subscribers = []} = await (await fetch("/api/admin/subscribers")).json();
+  document.getElementById("subscriber-count").textContent = subscribers.length + " active subscriber" + (subscribers.length === 1 ? "" : "s");
 
   const {messages = []} = await (await fetch("/api/admin/messages")).json();
   document.getElementById("messages-admin").replaceChildren(...messages.map(x => {

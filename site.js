@@ -30,7 +30,8 @@ document.getElementById("site-header").innerHTML = `
 document.getElementById("site-footer").innerHTML = `
   <b>IEEE TAMUSA Student Branch</b><br>
   <a href="https://www.ieee.org" target="_blank" rel="noopener">IEEE Global</a><br>
-  <a href="mailto:ieeetamusa@gmail.com">ieeetamusa@gmail.com</a>
+  <a href="mailto:ieeetamusa@gmail.com">ieeetamusa@gmail.com</a><br>
+  <a href="/Newsletter">Get the newsletter</a>
   <div class="socials">
     ${SOCIALS.map(([href, icon, label]) =>
       `<a href="${href}" target="_blank" rel="noopener"><img width="40" height="40" src="${icon}" alt="${label}"></a>`).join("")}

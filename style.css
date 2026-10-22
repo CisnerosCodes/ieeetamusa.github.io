@@ -84,6 +84,14 @@ h2 {
 .join-button:hover {
   background: var(--blue-hover);
 }
+.join-button.secondary {
+  background: white;
+  color: var(--blue);
+  border: solid 2px var(--blue);
+}
+.join-button.secondary:hover {
+  background: #f4f8fa;
+}
 .social-content {
   margin-top: 5em;
 }
