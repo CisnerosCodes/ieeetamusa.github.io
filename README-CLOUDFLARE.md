@@ -4,8 +4,9 @@ The site deploys on **Cloudflare Pages** (the `functions/` API routes do not run
 
 ## Editing the site
 - Navigation and footer live in `site.js`; every page loads it. Change links there once.
-- Colors are CSS variables at the top of `style.css`.
-- Officers: edit the cards in `Officers/index.html`, then uncomment the Officers entry in `site.js`.
+
+- Officers: edit the cards in `Officers/index.html` each year (comment at the top explains photos).
+- Design tokens (colors, fonts, spacing) are CSS variables at the top of `style.css`; fonts are IBM Plex from Google Fonts.
 
 This version adds:
 - About and Sponsorship pages.

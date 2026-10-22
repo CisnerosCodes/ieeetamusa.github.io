@@ -9,18 +9,22 @@
 <meta property="og:description" content="Upcoming IEEE TAMUSA workshops, corporate mixers, and branch meetings at Texas A&M University-San Antonio.">
 <meta property="og:site_name" content="IEEE TAMUSA">
 <link rel="icon" href="/cropped-tamusa_bb_Logo-Black-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/style.css">
 <script src="/site.js" defer></script>
 </head>
 <body>
-<header id="site-header" class="banner"></header>
+<header id="site-header" class="site-header"></header>
 <main id="main" class="page">
-<h1>Events</h1>
-<p class="page-intro">Workshops, mixers, and meetings coming up on campus. Times are shown in San Antonio time.</p>
-<p><a href="/Newsletter">Get new events by email &rarr;</a></p>
+<p class="eyebrow">Events</p>
+<h1>Upcoming events</h1>
+<p class="page-intro">Workshops, mixers, and meetings coming up on campus. Times are shown in San Antonio time. <a href="/Newsletter">Get new events by email</a>.</p>
+
 <div id="event-list" class="event-list"><div class="notice">Loading upcoming events...</div></div>
 </main>
-<footer id="site-footer" class="footer"></footer>
+<footer id="site-footer" class="site-footer"></footer>
 <script>
 const TZ = "America/Chicago";
 function eventDate(e) {
@@ -48,7 +52,11 @@ function showNotice(list, text, isError) {
     if (!events.length) return showNotice(list, "No upcoming events right now. Check Jagsync or Discord for the latest.");
     list.replaceChildren(...events.map(e => {
       const card = el("article", "event-card");
-      card.append(el("h2", "eT", e.title), el("div", "event-meta", eventDate(e)));
+      const parts = new Date(e.start).toLocaleDateString("en-US", {month: "short", day: "numeric", timeZone: e.allDay ? "UTC" : TZ}).split(" ");
+      const date = el("div", "event-date");
+      date.setAttribute("aria-hidden", "true");
+      date.append(el("span", "month", parts[0]), el("span", "day", parts[1]));
+      card.append(date, el("h2", "eT", e.title), el("div", "event-meta", eventDate(e)));
       if (e.location) card.append(el("div", "event-meta", e.location));
       if (e.description) card.append(el("p", "", e.description));
       if (e.url) {

@@ -2,37 +2,67 @@
 // Pages include <header id="site-header"></header> and <footer id="site-footer"></footer>.
 
 const NAV = [
-  ["/", "Home"],
-  ["/Membership", "Membership"],
-  ["/Events", "Events"],
-  // ["/Officers", "Officers"], // TODO: enable once Officers/index.html has the current roster
   ["/About", "About"],
+  ["/Events", "Events"],
+  ["/Officers", "Officers"],
   ["/Sponsorship", "Sponsorship"],
   ["/Contact", "Contact"]
 ];
 
 const SOCIALS = [
-  ["https://discord.gg/X2ucbghawh", "/discord.png", "Discord"],
-  ["https://www.instagram.com/ieee.tamusa", "/instagram.png", "Instagram"],
-  ["https://jagsync.tamusa.edu/organization/ieee", "/link.png", "Jagsync"]
+  ["https://jagsync.tamusa.edu/organization/ieee", "Jagsync"],
+  ["https://discord.gg/X2ucbghawh", "Discord"],
+  ["https://www.instagram.com/ieee.tamusa", "Instagram"]
 ];
 
 const here = location.pathname.replace(/\/(index\.html)?$/, "") || "/";
+const current = href => href === here ? ' aria-current="page"' : "";
 
-document.getElementById("site-header").innerHTML = `
+const header = document.getElementById("site-header");
+header.className = "site-header";
+header.innerHTML = `
   <a class="skip-link" href="#main">Skip to content</a>
-  <a href="/"><img class="logo" src="/001_TAMUSA-Logo_Updated_Horizontal-Black.png" alt="Texas A&amp;M University-San Antonio home"></a>
-  <nav class="links" aria-label="Main">
-    ${NAV.map(([href, label]) =>
-      `<a class="banner-link" href="${href}"${href === here ? ' aria-current="page"' : ""}>${label}</a>`).join("")}
-  </nav>`;
+  <div class="container">
+    <a class="brand" href="/">
+      <img src="/001_TAMUSA-Logo_Updated_Horizontal-Black.png" alt="Texas A&amp;M University-San Antonio" width="160" height="40">
+      <span>IEEE Student<br>Branch</span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      ${NAV.map(([href, label]) => `<a href="${href}"${current(href)}>${label}</a>`).join("")}
+      <a class="button" href="/Membership"${current("/Membership")}>Join</a>
+    </nav>
+  </div>`;
 
-document.getElementById("site-footer").innerHTML = `
-  <b>IEEE TAMUSA Student Branch</b><br>
-  <a href="https://www.ieee.org" target="_blank" rel="noopener">IEEE Global</a><br>
-  <a href="mailto:ieeetamusa@gmail.com">ieeetamusa@gmail.com</a><br>
-  <a href="/Newsletter">Get the newsletter</a>
-  <div class="socials">
-    ${SOCIALS.map(([href, icon, label]) =>
-      `<a href="${href}" target="_blank" rel="noopener"><img width="40" height="40" src="${icon}" alt="${label}"></a>`).join("")}
+header.querySelector(".menu-toggle").addEventListener("click", e => {
+  const open = header.classList.toggle("nav-open");
+  e.currentTarget.setAttribute("aria-expanded", open);
+});
+
+const footer = document.getElementById("site-footer");
+footer.className = "site-footer";
+footer.innerHTML = `
+  <div class="container">
+    <div>
+      <p class="footer-name">IEEE TAMUSA Student Branch</p>
+      <p>Texas A&amp;M University-San Antonio<br>One University Way, San Antonio, TX 78224</p>
+      <p><a href="mailto:ieeetamusa@gmail.com">ieeetamusa@gmail.com</a></p>
+    </div>
+    <div>
+      <h2>Get involved</h2>
+      <ul>
+        <li><a href="/Membership">Membership</a></li>
+        <li><a href="/Events">Events</a></li>
+        <li><a href="/Newsletter">Newsletter</a></li>
+        <li><a href="/Sponsorship">Sponsor us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Connect</h2>
+      <ul>
+        ${SOCIALS.map(([href, label]) => `<li><a href="${href}" target="_blank" rel="noopener">${label}</a></li>`).join("")}
+        <li><a href="https://www.ieee.org" target="_blank" rel="noopener">IEEE.org</a></li>
+      </ul>
+    </div>
+    <p class="legal">© ${new Date().getFullYear()} IEEE TAMUSA Student Branch. A student organization of Texas A&amp;M University-San Antonio.</p>
   </div>`;
